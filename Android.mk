@@ -1,3 +1,5 @@
+ifeq ($(BOARD_HAVE_BLUETOOTH_BLUEZ),true)
+
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
@@ -16,3 +18,4 @@ LOCAL_STATIC_JAVA_LIBRARIES := com.android.vcard
 LOCAL_CERTIFICATE := platform
 
 include $(BUILD_PACKAGE)
+endif
