@@ -62,6 +62,10 @@ public class BluetoothOppRfcommListener {
 
     private static final int CREATE_RETRY_TIME = 10;
 
+    private static final int DEFAULT_OPP_CHANNEL = 12;
+
+    private final int mBtOppRfcommChannel;
+
     private final BluetoothAdapter mAdapter;
 
     private BluetoothServerSocket mBtServerSocket = null;
@@ -69,6 +73,11 @@ public class BluetoothOppRfcommListener {
     private ServerSocket mTcpServerSocket = null;
 
     public BluetoothOppRfcommListener(BluetoothAdapter adapter) {
+        this(adapter, DEFAULT_OPP_CHANNEL);
+    }
+
+    public BluetoothOppRfcommListener(BluetoothAdapter adapter, int channel) {
+        mBtOppRfcommChannel = channel;
         mAdapter = adapter;
     }
 
@@ -115,7 +124,8 @@ public class BluetoothOppRfcommListener {
                         for (int i = 0; i < CREATE_RETRY_TIME && !mInterrupted; i++) {
                             try {
                                 if (V) Log.v(TAG, "Starting RFCOMM listener....");
-                                mBtServerSocket = mAdapter.listenUsingInsecureRfcommWithServiceRecord("OBEX Object Push", BluetoothUuid.ObexObjectPush.getUuid());
+                                mBtServerSocket = mAdapter.listenUsingInsecureRfcommOn(mBtOppRfcommChannel);
+                                //mBtServerSocket = mAdapter.listenUsingInsecureRfcommWithServiceRecord("OBEX Object Push", BluetoothUuid.ObexObjectPush.getUuid());
                                 if (V) Log.v(TAG, "Started RFCOMM listener....");
                             } catch (IOException e1) {
                                 Log.e(TAG, "Error create RfcommServerSocket " + e1);
