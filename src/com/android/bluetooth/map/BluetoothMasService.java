@@ -836,6 +836,9 @@ public class BluetoothMasService extends Service {
 
                 while (!stopped) {
                     try {
+                        if (mServerSocket == null) {
+                            break;
+                        }
                         BluetoothSocket connSocket = mServerSocket.accept();
 
                         BluetoothDevice device = connSocket.getRemoteDevice();
