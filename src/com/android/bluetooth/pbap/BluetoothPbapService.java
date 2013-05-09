@@ -545,6 +545,10 @@ public class BluetoothPbapService extends Service {
             while (!stopped) {
                 try {
                     if (VERBOSE) Log.v(TAG, "Accepting socket connection...");
+                    if (mServerSocket == null) {
+                        Log.e(TAG, "mServerSocket has been closed already");
+                        break;
+                    }
                     mConnSocket = mServerSocket.accept();
                     if (VERBOSE) Log.v(TAG, "Accepted socket connection...");
 
