@@ -31,7 +31,6 @@ package com.android.bluetooth.map;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.bluetooth.BluetoothUuid;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -122,6 +121,8 @@ public class BluetoothMns implements MessageNotificationListener {
     private EventHandler mSessionHandler;
 
     private List<MnsClient> mMnsClients = new ArrayList<MnsClient>();
+    public static final ParcelUuid BluetoothUuid_ObexMns = ParcelUuid
+            .fromString("00001133-0000-1000-8000-00805F9B34FB");
 
     private HashSet<Integer> mWaitingMasId = new HashSet<Integer>();
     private final Queue<Pair<Integer, String>> mEventQueue = new ConcurrentLinkedQueue<Pair<Integer, String>>();
@@ -644,7 +645,7 @@ public class BluetoothMns implements MessageNotificationListener {
             BluetoothSocket btSocket = null;
             try {
                 btSocket = device.createInsecureRfcommSocketToServiceRecord(
-                        BluetoothUuid.MessageNotificationServer.getUuid());
+                        BluetoothUuid_ObexMns.getUuid());
                 btSocket.connect();
             } catch (IOException e) {
                 Log.e(TAG, "BtSocket Connect error " + e.getMessage(), e);
